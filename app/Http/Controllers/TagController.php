@@ -10,7 +10,7 @@ class TagController extends Controller
 {
     public function show(Tag $tag)
     {
-        return view('tags-show', [
+        return view('tags.show', [
             'tag' => $tag,
         ]);
     }

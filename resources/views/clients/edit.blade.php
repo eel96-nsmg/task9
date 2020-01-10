@@ -13,9 +13,9 @@
                             @method('PATCH')
 
                             <div class="form-group row">
-                                <label for="name" class="col-sm-2 col-form-label">name</label>
+                                <label for="name" class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $client->name) }}" > 
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $client->name) }}" >
 
                                     @error('name')
                                         <span class="text-danger" role="alert">
@@ -24,21 +24,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="email" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                    {{--<textarea class="form-control" id="email" name="email" value="{{ $client->email }}"></textarea>--}}
 
-                                    <input type="text" class="form-control" id="email" name="email" value="{{ old('email', $client->email) }}" >
-
-
-                                    @error('email')
-                                    <span class="text-danger" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label for="company" class="col-sm-2 col-form-label">Company</label>
                                 <div class="col-sm-10">
@@ -52,9 +38,8 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
-                                <label for="position" class="col-sm-2 col-form-label">position</label>
+                                <label for="position" class="col-sm-2 col-form-label">Position</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="position" name="position" value="{{ old('position', $client->position) }}">
 
@@ -66,9 +51,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="email" name="email" value="{{ old('email', $client->email) }}" >
+
+                                    @error('email')
+                                    <span class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="form-group row">
-                                <label for="mobile" class="col-sm-2 col-form-label">mobile</label>
+                                <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="mobile" name="mobile" value="{{ old('mobile', $client->mobile) }}">
 
@@ -80,9 +77,8 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
-                                <label for="tel" class="col-sm-2 col-form-label">tel</label>
+                                <label for="tel" class="col-sm-2 col-form-label">Tel</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="tel" name="tel" value="{{ old('tel', $client->tel) }}">
 
@@ -94,9 +90,8 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
-                                <label for="fax" class="col-sm-2 col-form-label">fax</label>
+                                <label for="fax" class="col-sm-2 col-form-label">Fax</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="fax" name="fax" value="{{ old('fax', $client->fax) }}">
 
@@ -108,9 +103,8 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
-                                <label for="address" class="col-sm-2 col-form-label">address</label>
+                                <label for="address" class="col-sm-2 col-form-label">Address</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $client->address) }}">
 
@@ -122,9 +116,8 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
-                                <label for="company_address" class="col-sm-2 col-form-label">company_address</label>
+                                <label for="company_address" class="col-sm-2 col-form-label">Company Address</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="company_address" name="company_address" value="{{ old('company_address', $client->company_address) }}">
 
@@ -136,18 +129,18 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="categories" class="col-sm-2 col-form-label">Category</label>
+                                <div class="col-sm-10">
+                                    <select multiple class="form-control" id="categories" name="categories[]">
 
-                            <div class="form-group">
-                                <label for="Category" class="col-sm-2 col-form-label">Category</label>
-                                <select multiple class="form-control" id="categories" name="categories[]">
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}" @if($client->categories->contains($category->id)) selected @endif>{{$category->name}}</option>
+                                        @endforeach
 
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}" @if($client->categories->contains($category->id)) selected @endif>{{$category->name}}</option>
-                                    @endforeach
-
-                                  </select>
+                                    </select>
+                                </div>
                             </div>
-
 
                             <div class="form-group row">
                                 <label for="tags" class="col-sm-2 col-form-label">Tag</label>
@@ -161,8 +154,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary">저장</button>
+
+                            <button type="submit" class="btn btn-success w-100 mt-4">수정</button>
                         </form>
                     </div>
                 </div>

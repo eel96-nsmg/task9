@@ -10,25 +10,22 @@ use App\Tag;
 
 class ClientController extends Controller
 {
-    // 리스트 페이지
     public function index()
     {
-       return view('clients', [
+       return view('clients.index', [
         'clients' => Client::orderBy('id', 'desc')->paginate(10),
     ]);
     }
 
-    // 등록 페이지
     public function create()
     {
-       return view('client-create',[
+       return view('clients.create',[
            'categories' => Category::all(),
            'tags' => Tag::all(),
        ]);
 
     }
 
-    // 등록
     public function store(Request $request)
     {
         // 검증(validation)
@@ -37,19 +34,19 @@ class ClientController extends Controller
             'email' => 'required',
             'company' => 'required',
         ]);
-        
+
         // client 생성
         $client = auth()->user()->clients()->create($request->all());
 
         // client와 category 연결
         $client->categories()->sync($request->categories);
-        
+
         // tag 파싱
-        $tags = array_filter(preg_split("/[\s,]+/", $request->tags));
+        $tags = array_filter(preg_split("/[\s,]+/", str_replace('#', '', $request->tags)));
 
         foreach($tags as $tag) {
             // tag name이 존재하지 않을 경우 생성
-            $createdTag = Tag::firstOrCreate(['name' => str_replace('#', '', $tag)]);
+            $createdTag = Tag::firstOrCreate(['name' => $tag]);
 
             // client와 tag 연결
             $client->tags()->attach($createdTag->id);
@@ -58,30 +55,23 @@ class ClientController extends Controller
         return redirect()->route('clients.index');
     }
 
-    // 상세 페이지
     public function show(Client $client)         //원래는 $id였다  , History $history
     {
-        return view('client-show', [
+        return view('clients.show', [
             'client' => $client,
         ]);
 
     }
 
-    // 수정 페이지
-    public function edit(Client $client)        //원래는 $id였다
+    public function edit(Client $client)
     {
-        return view('client-edit', [
+        return view('clients.edit', [
             'client' => $client,
             'categories' => Category::all(),
             'tags' => '#' . implode(', #', $client->tags->pluck('name')->toArray()),
         ]);
-
-        //return view('client-edit', [
-        //'clients' => Client::orderBy('id', 'desc')->paginate(10),
-        //]);
     }
 
-    // 수정
     public function update(Request $request, Client $client)
     {
         $request->validate([
@@ -95,24 +85,22 @@ class ClientController extends Controller
         $client->categories()->sync($request->categories);
 
         // tag 파싱
-        $tags = array_filter(preg_split("/[\s,]+/", $request->tags));
+        $tags = array_filter(preg_split("/[\s,]+/", str_replace('#', '', $request->tags)));
 
         // 기존 연결된 tag 제거
         $client->tags()->sync([]);
 
         foreach($tags as $tag) {
             // tag name이 존재하지 않을 경우 생성
-            $createdTag = Tag::firstOrCreate(['name' => str_replace('#', '', $tag)]);
+            $createdTag = Tag::firstOrCreate(['name' => $tag]);
 
             // client와 tag 연결
             $client->tags()->attach($createdTag->id);
         }
 
         return back();
-
     }
 
-    // 삭제
     public function destroy($id)
     {
         Client::destroy($id);
