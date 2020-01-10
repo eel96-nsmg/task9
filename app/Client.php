@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+    protected $fillable = [
+        'name',
+        'email',
+        'company',
+        'position',
+        'mobile',
+        'tel',
+        'fax',
+        'address',
+        'company_address',
+    ];
+
+
     public function histories()
     {
         return $this->hasMany('App\History');
@@ -13,11 +26,18 @@ class Client extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('App\Category');
+        return $this->belongsToMany('App\Category')->withTimestamps();
     }
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany('App\Tag')->withTimestamps();
     }
+
+    public function likeUsers()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
+
+
 }

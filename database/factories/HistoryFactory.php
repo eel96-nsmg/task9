@@ -9,5 +9,6 @@ $factory->define(History::class, function (Faker $faker) {
     return [
         'content' => $faker->text($maxNbChars = 200),
         'client_id' => $faker->numberBetween($min = 1, $max = 20),
+        'user_id' => $faker->numberBetween($min = 1, $max = 20),
     ];
 });

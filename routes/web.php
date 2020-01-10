@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/clients/{id}/likes', 'ClientController@likes')->name('clients.likes');
+
+Route::resource('/clients', 'ClientController');
+Route::resource('/histories', 'HistoryController')->only(['store', 'update', 'destroy']);
+Route::resource('/tags', 'TagController')->only(['show']);
+Route::resource('/categories', 'CategoryController');
