@@ -34,7 +34,7 @@ class Client extends Model
         return $this->belongsToMany('App\Tag')->withTimestamps();
     }
 
-    public function likeUsers()
+    public function likedUsers()
     {
         return $this->belongsToMany('App\User')->withTimestamps();
     }

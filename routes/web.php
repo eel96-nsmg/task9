@@ -24,3 +24,4 @@ Route::resource('/clients', 'ClientController');
 Route::resource('/histories', 'HistoryController')->only(['store', 'update', 'destroy']);
 Route::resource('/tags', 'TagController')->only(['show']);
 Route::resource('/categories', 'CategoryController');
+Route::get('/users/likes', 'UserController@likes')->name('users.likes');

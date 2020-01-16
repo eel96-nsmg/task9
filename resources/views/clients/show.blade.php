@@ -1,4 +1,13 @@
 @extends('layouts.app')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+    $(function() {
+        $("#requestBtn").on("click", function() {
+            $("#content").route('clients.index');
+        });
+    });
+</script>
 
 @section('content')
     <div class="container">
@@ -149,7 +158,11 @@
 
                             <textarea class="form-control w-100" id="content" name="content"></textarea>
 
-                            <button type="submit" class="btn btn-primary w-100 mt-2">댓글달기</button>
+                            {{--<button type="submit" class="btn btn-primary w-100 mt-2">댓글달기</button>--}}
+                            <p id="content"></p>
+                            <button id="requestBtn">댓글작성</button>
+
+
                        </form>
                     </div>
                 </div>

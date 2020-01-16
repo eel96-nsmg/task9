@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\History');
     }
+
+    public function categories()
+    {
+        return $this->hasMany('App\Category');
+    }
 }
