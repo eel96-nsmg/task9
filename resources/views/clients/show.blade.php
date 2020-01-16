@@ -1,13 +1,4 @@
 @extends('layouts.app')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-    $(function() {
-        $("#requestBtn").on("click", function() {
-            $("#content").route('clients.index');
-        });
-    });
-</script>
 
 @section('content')
     <div class="container">
@@ -18,15 +9,19 @@
                         <div class="d-flex justify-content-between">
                             <div class="pt-2">{{ strtoupper($client->name) }} 님 </div>
                             <div>
-                                <form method="POST" action="{{ route('clients.likes', $client->id) }}">
-                                    @csrf
+{{--                                <form method="POST" action="{{ route('clients.likes', $client->id) }}">--}}
+{{--                                    @csrf--}}
 
-                                    @if(auth()->user()->likes->contains($client->id))
-                                        <button type="submit" class="btn btn-outline-secondary">좋아요 취소</button>
-                                    @else
-                                        <button type="submit" class="btn btn-outline-secondary">좋아요!</button>
-                                    @endif
-                                </form>
+{{--                                    @if(auth()->user()->likes->contains($client->id))--}}
+{{--                                        <button type="submit" class="btn btn-outline-secondary">좋아요 취소</button>--}}
+{{--                                    @else--}}
+{{--                                        <button type="submit" class="btn btn-outline-secondary">좋아요!</button>--}}
+{{--                                    @endif--}}
+{{--                                </form>--}}
+
+                                <button type="submit" id="likeBtn" class="btn btn-outline-secondary" onclick="likeClient({{ $client->id }})">
+                                    {{ auth()->user()->likes->contains($client->id) ? '좋아요 취소' : '좋아요' }}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -134,12 +129,13 @@
                         <div class="row">
                             <a href="{{ route('clients.edit', $client->id)}}" class="btn btn-success col-6">수정</a>
 
-                            <form method="POST" action="{{ route('clients.destroy', $client->id) }}" class="col-6">
-                                @csrf
-                                @method('delete')
+                            <button type="submit" class="btn btn-danger w-100 col-6" onclick="deleteClient({{ $client->id }})">삭제</button>
+{{--                            <form method="POST" action="{{ route('clients.destroy', $client->id) }}" class="col-6">--}}
+{{--                                @csrf--}}
+{{--                                @method('delete')--}}
 
-                                <button type="submit" class="btn btn-danger w-100">삭제</button>
-                            </form>
+{{--                                <button type="submit" class="btn btn-danger w-100">삭제</button>--}}
+{{--                            </form>--}}
                         </div>
                     </div>
                 </div>
@@ -150,20 +146,26 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                       <form method="POST" action="{{ route('histories.store') }}">
-                            @csrf
-                            <input type="hidden" name="client_id" value="{{ $client->id }}">
+{{--                       <form method="POST" action="{{ route('histories.store') }}">--}}
+{{--                            @csrf--}}
+{{--                            <input type="hidden" name="client_id" value="{{ $client->id }}">--}}
+
+{{--                            <label for="content" class="col-form-label">댓글</label>--}}
+
+{{--                            <textarea class="form-control w-100" id="content" name="content"></textarea>--}}
+
+{{--                            <button type="submit" class="btn btn-primary w-100 mt-2">댓글달기</button>--}}
+{{--                       </form>--}}
+
+                        <form>
+                            <input type="hidden" id="client_id" name="client_id" value="{{ $client->id }}">
 
                             <label for="content" class="col-form-label">댓글</label>
 
                             <textarea class="form-control w-100" id="content" name="content"></textarea>
 
-                            {{--<button type="submit" class="btn btn-primary w-100 mt-2">댓글달기</button>--}}
-                            <p id="content"></p>
-                            <button id="requestBtn">댓글작성</button>
-
-
-                       </form>
+                            <button type="button" class="btn btn-primary w-100 mt-2" onclick="addHistory()">댓글달기</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -184,17 +186,29 @@
                                     <p class="text-right mb-0">
                                         <span class="text-muted">by</span> {{ $history->user->name }}, {{ $history->updated_at->diffForHumans() }}
                                     </p>
-                                    <textarea class="form-control w-100" id="content" name="content">{{ $history->content }}</textarea>
+                                    <textarea class="form-control w-100" name="content">{{ $history->content }}</textarea>
 
-                                    <button type="submit" class="btn btn-success mt-2">수정</button>
+                                    <button type="submit" class="btn btn-outline-success mt-2">수정</button>
                                 </form>
 
                                 <form method="POST" action="{{ route('histories.destroy', $history->id) }}">
                                     @csrf
                                     @method('delete')
 
-                                    <button type="submit" class="btn btn-danger mt-2">삭제</button>
+                                    <button type="submit" class="btn btn-outline-danger mt-2">삭제</button>
                                 </form>
+
+{{--                                <form>--}}
+{{--                                    <p class="text-right mb-0">--}}
+{{--                                        <span class="text-muted">by</span> {{ $history->user->name }}, {{ $history->updated_at->diffForHumans() }}--}}
+{{--                                    </p>--}}
+{{--                                    <textarea class="form-control w-100" id="content" name="content">{{ $history->content }}</textarea>--}}
+
+{{--                                    <div class="mt-2 d-flex justify-content-end">--}}
+{{--                                        <button type="button" class="btn btn-outline-success" onclick="clickModifyHistory({{ $history->id }})">수정</button>--}}
+{{--                                        <button type="button" class="btn btn-outline-danger ml-2" onclick="clickDeleteHistory({{ $history->id }})">삭제</button>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
                             </div>
                         @endforeach
                     </div>
@@ -203,3 +217,65 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script>
+        function addHistory() {
+            if(confirm('History를 등록하시겠습니까?')) {
+                $.ajax({
+                    method: "POST",
+                    url: "/histories",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        client_id: $('#client_id').val(),
+                        content: $('#content').val(),
+                    }
+                })
+                .done(function (msg) {
+                    location.reload()
+                });
+            }
+        }
+
+        function deleteClient(id) {
+            if(confirm('Client를 삭제하시겠습니까?')) {
+                $.ajax({
+                    method: "DELETE",
+                    url: "/clients/" + id,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                .done(function (msg) {
+                    window.location = '{{ route('clients.index') }}'
+                });
+            }
+        }
+
+        function likeClient(id) {
+            var likeBtn = $('#likeBtn')
+
+            $.ajax({
+                method: "POST",
+                url: "/clients/" + id + "/likes",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    client_id: id,
+                }
+            })
+            .done(function (msg) {
+                if(likeBtn.text() === '좋아요') {
+                    likeBtn.text('좋아요 취소')
+                }
+                else {
+                    likeBtn.text('좋아요')
+                }
+            });
+        }
+    </script>
+@endsection
+

@@ -23,6 +23,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                <i class="fab fa-500px"></i>
+
+
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -43,7 +46,7 @@
 
                     </ul>
 
-                    
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -85,8 +88,13 @@
         </nav>
 
         <main class="py-4">
+
             @yield('content')
+
         </main>
     </div>
+
+    @yield('scripts')
+
 </body>
 </html>

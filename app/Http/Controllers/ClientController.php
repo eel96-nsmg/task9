@@ -52,7 +52,8 @@ class ClientController extends Controller
             $client->tags()->attach($createdTag->id);
         }
 
-        return redirect()->route('clients.index');
+//        return redirect()->route('clients.index');
+        return response(null, 204);
     }
 
     public function show(Client $client)         //원래는 $id였다  , History $history
@@ -105,13 +106,15 @@ class ClientController extends Controller
     {
         Client::destroy($id);
 
-        return redirect()->route('clients.index');
+//        return redirect()->route('clients.index');
+        return response(null, 204);
     }
 
     public function likes($id)
     {
         auth()->user()->likes()->toggle($id);
 
-        return redirect()->route('clients.show', $id);
+//        return redirect()->route('clients.show', $id);
+        return response(null, 204);
     }
 }
