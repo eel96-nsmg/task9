@@ -14,7 +14,7 @@ class HistoryController extends Controller
 
         return redirect()->route('clients.show', $request->client_id);
     }
-    
+
     public function update(Request $request, $id)
     {
         History::find($id)->update($request->all());
@@ -26,6 +26,7 @@ class HistoryController extends Controller
     {
         History::destroy($id);
 
-        return back();
+//        return back();
+        return response(null, 204);
     }
 }
