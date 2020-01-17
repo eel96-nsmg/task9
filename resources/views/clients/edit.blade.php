@@ -155,11 +155,47 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-success w-100 mt-4">수정</button>
+{{--                            <button type="submit" class="btn btn-success w-100 mt-4" >수정</button>--}}
+                            <button type="button" class="btn btn-success w-100 mt-4" onclick="editClient()">수정</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        function editClient() {
+            if(confirm('Client를 수정하시겠습니까?')) {
+
+
+                $.ajax({
+                    method: "get",
+                    url: "/clients/{client}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        id: $('#id').val(),
+                        name: $('#name').val(),
+                        company: $('#company').val(),
+                        position: $('#position').val(),
+                        email: $('#email').val(),
+                        mobile: $('#mobile').val(),
+                        tel: $('#tel').val(),
+                        fax: $('#fax').val(),
+                        address: $('#address').val(),
+                        company_address: $('#company_address').val(),
+                        categories: $('#categories').val(),
+                        tags: $('#tags').val(),
+                    }
+                })
+                    .done(function (msg) {
+                        window.location = '{{ route('clients.index') }}'
+                    });
+            }
+        }
+    </script>
 @endsection

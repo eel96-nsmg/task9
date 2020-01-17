@@ -24,12 +24,37 @@
                                     @enderror
                                 </div>
                             </div>
-                            
-                            <button type="submit" class="btn btn-success w-100 mt-4">수정</button>
+
+                            <button type="submit" class="btn btn-success w-100 mt-4" onclick="editCategory()">수정</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        function editCategory() {
+            if(confirm('Category를 수정하시겠습니까?')) {
+
+
+                $.ajax({
+                    method: "get",
+                    url: "/categories/{category}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        client_id: $('#id').val(),
+                        name: $('#name').val(),
+                    }
+                })
+                    .done(function (msg) {
+                        window.location = '{{ route('categories.index') }}'
+                    });
+            }
+        }
+    </script>
 @endsection

@@ -14,6 +14,7 @@ class ClientController extends Controller
     {
        return view('clients.index', [
         'clients' => Client::orderBy('id', 'desc')->paginate(10),
+        'categories' => Category::all(),
     ]);
     }
 
@@ -22,8 +23,9 @@ class ClientController extends Controller
        return view('clients.create',[
            'categories' => Category::all(),
            'tags' => Tag::all(),
+           'client' => Client::all(),
        ]);
-
+        return response(null, 204);
     }
 
     public function store(Request $request)
@@ -52,8 +54,8 @@ class ClientController extends Controller
             $client->tags()->attach($createdTag->id);
         }
 
-//        return redirect()->route('clients.index');
-        return response(null, 204);
+        return redirect()->route('clients.index');
+//        return response(null, 204);
     }
 
     public function show(Client $client)         //원래는 $id였다  , History $history

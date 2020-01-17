@@ -179,7 +179,6 @@
                                     <button type="submit" class="btn btn-outline-success mt-2">수정</button>
                                     <button type="button" class="btn btn-outline-danger mt-2" onclick="deleteHistory($(this), {{ $history->id }})">삭제</button>
                                 </form>
-
 {{--                                <form method="POST" action="{{ route('histories.destroy', $history->id) }}">--}}
 {{--                                    @csrf--}}
 {{--                                    @method('delete')--}}
