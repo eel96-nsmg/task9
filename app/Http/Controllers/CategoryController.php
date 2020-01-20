@@ -35,9 +35,9 @@ class CategoryController extends Controller
         ]);
 
         // client 생성
-        $category = Category::create($request->all());
+        Category::create($request->all());
 
-        return redirect()->route('categories.index');
+        return response(null, 204);
     }
 
     public function destroy($id)
@@ -62,9 +62,8 @@ class CategoryController extends Controller
         ]);
 
         $category->update($request->all());
-        //$client->categories()->sync($request->categories);
 
-        return redirect()->route('categories.index');
+        return response(null, 204);
     }
 
 }
