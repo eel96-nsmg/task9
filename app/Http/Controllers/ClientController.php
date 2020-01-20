@@ -25,7 +25,7 @@ class ClientController extends Controller
            'tags' => Tag::all(),
            'client' => Client::all(),
        ]);
-        return response(null, 204);
+//        return response(null, 204);
     }
 
     public function store(Request $request)
@@ -60,9 +60,10 @@ class ClientController extends Controller
 
     public function show(Client $client)         //원래는 $id였다  , History $history
     {
-        return view('clients.show', [
-            'client' => $client,
-        ]);
+//        return view('clients.show', [
+//            'client' => $client,
+//        ]);
+        return response()->json($client);
 
     }
 

@@ -169,8 +169,6 @@
     <script>
         function editClient() {
             if(confirm('Client를 수정하시겠습니까?')) {
-
-
                 $.ajax({
                     method: "get",
                     url: "/clients/{client}",

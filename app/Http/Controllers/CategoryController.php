@@ -17,9 +17,7 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        return view('categories.show', [
-            'category' => $category,
-        ]);
+        return response()->json($category);
     }
 
     public function create()
@@ -46,7 +44,7 @@ class CategoryController extends Controller
     {
         category::destroy($id);
 
-        return redirect()->route('categories.index');
+//        return redirect()->route('categories.index');
     }
 
     public function edit(Category $category)
