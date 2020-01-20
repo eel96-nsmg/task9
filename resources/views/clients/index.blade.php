@@ -190,8 +190,6 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addClient()">Save</button>
-                                                {{--<button type="button" class="btn btn-outline-primary">등록</button>--}}
-                                                {{--<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>--}}
                                             </div>
                                         </div>
                                     </div>
@@ -385,7 +383,7 @@
 
                                                 <div class="d-flex justify-content-center mt-4">
                                                     <input type="hidden" id="editId" value="">
-                                                    <button type="button" class="btn btn-outline-primary w-50 mt-4" onclick="editCategory()">수정</button>
+                                                    <button type="button" class="btn btn-outline-primary w-50 mt-4" onclick="editClient()">수정</button>
                                                     <button type="button" class="btn btn-outline-secondary w-50 mt-4" data-dismiss="modal">취소</button>
                                                     {{--<button type="button" class="btn btn-outline-danger w-50 mt-4" onclick="deleteCategory({{ $category->id }})">삭제</button>--}}
                                                     <button type="button" class="btn btn-outline-danger w-50 mt-4" onclick="deleteClient()">삭제</button>
@@ -483,6 +481,39 @@
                     url: "/clients/" + $('#editId').val(),
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    error: function (err) {
+                        alert('잠시 후 다시 시도해 주세요.')
+                        console.log(err)
+                    },
+                    success: function (res) {
+                        window.location = '{{ route('clients.index') }}'
+                    },
+                })
+            }
+        }
+
+        function editClient() {
+            if(confirm('Client를 수정하시겠습니까?')) {
+                $.ajax({
+                    method: "GET",
+                    url: "/clients/id/edit ",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        id: $('#id').val(),
+                        name: $('#name').val(),
+                        company: $('#company').val(),
+                        position: $('#position').val(),
+                        email: $('#email').val(),
+                        mobile: $('#mobile').val(),
+                        tel: $('#tel').val(),
+                        fax: $('#fax').val(),
+                        address: $('#address').val(),
+                        company_address: $('#company_address').val(),
+                        categories: $('#categories').val(),
+                        tags: $('#tags').val(),
                     },
                     error: function (err) {
                         alert('잠시 후 다시 시도해 주세요.')
