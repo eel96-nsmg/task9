@@ -391,19 +391,15 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-
-                                                <div class="d-flex justify-content-center mt-4">
-                                                    <input type="hidden" id="editId" value="">
-                                                    <button type="button" class="btn btn-outline-primary w-50 mt-4" onclick="updateClient()">수정</button>
-                                                    <button type="button" class="btn btn-outline-secondary w-50 mt-4" data-dismiss="modal">취소</button>
-                                                    {{--<button type="button" class="btn btn-outline-danger w-50 mt-4" onclick="deleteCategory({{ $category->id }})">삭제</button>--}}
-                                                    <button type="button" class="btn btn-outline-danger w-50 mt-4" onclick="deleteClient()">삭제</button>
-                                                </div>
                                             </form>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
+                                    <div class="modal-footer">
+                                        <input type="hidden" id="editId" value="">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" onclick="deleteClient()">Delete</button>
+                                        <button type="button" class="btn btn-primary" onclick="updateClient()">Save</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
