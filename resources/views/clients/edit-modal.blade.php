@@ -17,8 +17,8 @@
 
                                 @error('name')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -31,8 +31,8 @@
 
                                 @error('company')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -45,8 +45,8 @@
 
                                 @error('position')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -59,8 +59,8 @@
 
                                 @error('email')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -73,8 +73,8 @@
 
                                 @error('mobile')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -87,8 +87,8 @@
 
                                 @error('tel')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -101,8 +101,8 @@
 
                                 @error('fax')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -115,8 +115,8 @@
 
                                 @error('address')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -129,8 +129,8 @@
 
                                 @error('company_address')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -141,13 +141,13 @@
 
                             <div class="col-sm-8">
                                 <select multiple class="form-control" id="editCategories" name="categories[]">
-                                    {{--                                                            @foreach($client->categories as $category)--}}
-                                    {{--                                                                <a href="#" class="list-group-item list-group-item-action">--}}
-                                    {{--                                                                    <option value="{{$category->id}}" selected>{{$category->name}}</option></a>--}}
-                                    {{--                                                            @endforeach--}}
+                                    {{--@foreach($client->categories as $category)--}}
+                                    {{--    <a href="#" class="list-group-item list-group-item-action">--}}
+                                    {{--        <option value="{{$category->id}}" selected>{{$category->name}}</option></a>--}}
+                                    {{--@endforeach--}}
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
-                                        {{--                                                                <option value="{{$category->editId}}" @if($client->categories->contains($category->editId)) selected @endif>{{$category->editName}}</option>--}}
+                                        {{--<option value="{{$category->editId}}" @if($client->categories->contains($category->editId)) selected @endif>{{$category->editName}}</option>--}}
                                     @endforeach
                                 </select>
                             </div>
@@ -156,19 +156,19 @@
                         <div class="form-group row">
                             <label for="editTags" class="col-sm-4 col-form-label">Tag</label>
                             <div class="col-sm-8">
-                                {{--                                                        <input type="text" class="form-control" id="editTags" name="tags" value="#{{ old('tags') }}">--}}
+                                {{-- <input type="text" class="form-control" id="editTags" name="tags" value="#{{ old('tags') }}">--}}
 
-                                {{--                                                        @error('tags')--}}
-                                {{--                                                        <span class="text-danger" role="alert">--}}
-                                {{--                                                            <strong>{{ $message }}</strong>--}}
-                                {{--                                                        </span>--}}
-                                {{--                                                        @enderror--}}
+                                {{-- @error('tags')--}}
+                                {{-- <span class="text-danger" role="alert">--}}
+                                {{--     <strong>{{ $message }}</strong>--}}
+                                {{-- </span>--}}
+                                {{-- @enderror--}}
                                 <input type="text" class="form-control" id="editTags" name="tags" value="#{{ old('tags') }}">
 
                                 @error('tags')
                                 <span class="text-danger" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>

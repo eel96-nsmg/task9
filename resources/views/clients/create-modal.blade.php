@@ -19,8 +19,8 @@
 
                                 @error('name')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -33,8 +33,8 @@
 
                                 @error('company')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -47,8 +47,8 @@
 
                                 @error('position')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -61,8 +61,8 @@
 
                                 @error('email')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -75,8 +75,8 @@
 
                                 @error('mobile')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -89,8 +89,8 @@
 
                                 @error('tel')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -103,8 +103,8 @@
 
                                 @error('fax')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -117,8 +117,8 @@
 
                                 @error('address')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -131,8 +131,8 @@
 
                                 @error('company_address')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
@@ -159,8 +159,8 @@
 
                                 @error('tags')
                                 <span class="text-danger" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
 
                             </div>
