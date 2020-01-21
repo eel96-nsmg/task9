@@ -58,13 +58,16 @@ class ClientController extends Controller
 //        return response(null, 204);
     }
 
-    public function show(Client $client)         //원래는 $id였다  , History $history
+    public function show(Client $client)         //원래는 Client $client
     {
 //        return view('clients.show', [
 //            'client' => $client,
 //        ]);
-        return response()->json($client);
-
+        return response()->json([
+            'client' => $client,
+            'categories' => $client->categories,
+            'tags' => $client->tags,
+        ]);
     }
 
     public function edit(Client $client)
@@ -102,7 +105,7 @@ class ClientController extends Controller
             $client->tags()->attach($createdTag->id);
         }
 
-        return back();
+//        return back();
     }
 
     public function destroy($id)

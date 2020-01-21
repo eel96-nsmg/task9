@@ -360,9 +360,13 @@
 
                                                     <div class="col-sm-8">
                                                         <select multiple class="form-control" id="editCategories" name="categories[]">
-                                                            @foreach($client->categories as $category)
-                                                                <a href="#" class="list-group-item list-group-item-action">
-                                                                    <option value="{{$category->id}}" selected>{{$category->name}}</option></a>
+{{--                                                            @foreach($client->categories as $category)--}}
+{{--                                                                <a href="#" class="list-group-item list-group-item-action">--}}
+{{--                                                                    <option value="{{$category->id}}" selected>{{$category->name}}</option></a>--}}
+{{--                                                            @endforeach--}}
+                                                            @foreach($categories as $category)
+                                                                <option value="{{$category->id}}">{{$category->name}}</option>
+{{--                                                                <option value="{{$category->editId}}" @if($client->categories->contains($category->editId)) selected @endif>{{$category->editName}}</option>--}}
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -371,6 +375,13 @@
                                                 <div class="form-group row">
                                                     <label for="editTags" class="col-sm-4 col-form-label">Tag</label>
                                                     <div class="col-sm-8">
+{{--                                                        <input type="text" class="form-control" id="editTags" name="tags" value="#{{ old('tags') }}">--}}
+
+{{--                                                        @error('tags')--}}
+{{--                                                        <span class="text-danger" role="alert">--}}
+{{--                                                            <strong>{{ $message }}</strong>--}}
+{{--                                                        </span>--}}
+{{--                                                        @enderror--}}
                                                         <input type="text" class="form-control" id="editTags" name="tags" value="#{{ old('tags') }}">
 
                                                         @error('tags')
@@ -383,7 +394,7 @@
 
                                                 <div class="d-flex justify-content-center mt-4">
                                                     <input type="hidden" id="editId" value="">
-                                                    <button type="button" class="btn btn-outline-primary w-50 mt-4" onclick="editClient()">수정</button>
+                                                    <button type="button" class="btn btn-outline-primary w-50 mt-4" onclick="updateClient()">수정</button>
                                                     <button type="button" class="btn btn-outline-secondary w-50 mt-4" data-dismiss="modal">취소</button>
                                                     {{--<button type="button" class="btn btn-outline-danger w-50 mt-4" onclick="deleteCategory({{ $category->id }})">삭제</button>--}}
                                                     <button type="button" class="btn btn-outline-danger w-50 mt-4" onclick="deleteClient()">삭제</button>
@@ -449,6 +460,7 @@
         }
 
         function openEditClientModal(id) {
+            var arrcategory = []
             $.ajax({
                 method: "get",
                 url: "/clients/" + id,
@@ -458,18 +470,18 @@
                 data: {}
             })
                 .done(function (res) {
-                    $('#editId').val(res.id)
-                    $('#editName').val(res.name)
-                    $('#editCompany').val(res.company)
-                    $('#editPosition').val(res.position)
-                    $('#editEmail').val(res.email)
-                    $('#editMobile').val(res.mobile)
-                    $('#editTel').val(res.tel)
-                    $('#editFax').val(res.fax)
-                    $('#editAddress').val(res.address)
-                    $('#editCompany_Address').val(res.company_address)
-                    $('#editCategories').val(res.categories)
-                    $('#editTags').val(res.tags)
+                    $('#editId').val(res.client.id)
+                    $('#editName').val(res.client.name)
+                    $('#editCompany').val(res.client.company)
+                    $('#editPosition').val(res.client.position)
+                    $('#editEmail').val(res.client.email)
+                    $('#editMobile').val(res.client.mobile)
+                    $('#editTel').val(res.client.tel)
+                    $('#editFax').val(res.client.fax)
+                    $('#editAddress').val(res.client.address)
+                    $('#editCompany_Address').val(res.client.company_address)
+                    $('#editCategories').val(arrcategory)
+                    $('#editTags').val(res.client.tags)
                     $('#exampleModaledit2').modal('show')
                 });
         }
@@ -493,27 +505,28 @@
             }
         }
 
-        function editClient() {
+        function updateClient() {
             if(confirm('Client를 수정하시겠습니까?')) {
+                var editId = $('#editId').val()
                 $.ajax({
-                    method: "GET",
-                    url: "/clients/id/edit ",
+                    method: "PUT",
+                    url: "/clients/" + editId,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {
-                        id: $('#id').val(),
-                        name: $('#name').val(),
-                        company: $('#company').val(),
-                        position: $('#position').val(),
-                        email: $('#email').val(),
-                        mobile: $('#mobile').val(),
-                        tel: $('#tel').val(),
-                        fax: $('#fax').val(),
-                        address: $('#address').val(),
-                        company_address: $('#company_address').val(),
-                        categories: $('#categories').val(),
-                        tags: $('#tags').val(),
+                        id: editId,
+                        name: $('#editName').val(),
+                        company: $('#editCompany').val(),
+                        position: $('#editPosition').val(),
+                        email: $('#editEmail').val(),
+                        mobile: $('#editMobile').val(),
+                        tel: $('#editTel').val(),
+                        fax: $('#editFax').val(),
+                        address: $('#editAddress').val(),
+                        company_address: $('#editAompany_Address').val(),
+                        categories: $('#editCategories').val(),
+                        tags: $('#editTags').val(),
                     },
                     error: function (err) {
                         alert('잠시 후 다시 시도해 주세요.')
