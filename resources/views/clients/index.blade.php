@@ -401,7 +401,6 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        </form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -419,7 +418,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 
@@ -460,16 +458,29 @@
         }
 
         function openEditClientModal(id) {
-            var arrcategory = []
+            var categories = []
+            var tags = ''
+
             $.ajax({
                 method: "get",
                 url: "/clients/" + id,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: {}
-            })
-                .done(function (res) {
+                data: {},
+                error: function (err) {
+                    alert('잠시 후 다시 시도해 주세요.')
+                    console.log(err)
+                },
+                success: function (res) {
+                    res.categories.map(function(category) {
+                        categories.push(category.id)
+                    })
+
+                    res.tags.map(function(tag) {
+                        tags = tags + '#' + tag.name + ', '
+                    })
+
                     $('#editId').val(res.client.id)
                     $('#editName').val(res.client.name)
                     $('#editCompany').val(res.client.company)
@@ -480,10 +491,12 @@
                     $('#editFax').val(res.client.fax)
                     $('#editAddress').val(res.client.address)
                     $('#editCompany_Address').val(res.client.company_address)
-                    $('#editCategories').val(arrcategory)
-                    $('#editTags').val(res.client.tags)
+                    $('#editCategories').val(categories)
+                    $('#editTags').val(tags)
+
                     $('#exampleModaledit2').modal('show')
-                });
+                },
+            })
         }
 
         function deleteClient() {
