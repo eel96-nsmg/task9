@@ -5,9 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-
                     {{--검색창?--}}
-{{--                    <a href="{{ route('clients.searchpage') }}" class="list-group-item list-group-item-action">--}}
                     <div class="input-group-prepend">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
                         <div class="dropdown-menu">
@@ -16,12 +14,11 @@
                             <a class="dropdown-item" href="#">Tag</a>
                         </div>
                     </div>
-                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
                     <div class="input-group-append">
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
                         <button class="btn btn-success" type="button">검색</button>
                     </div>
                     {{--검색창?--}}
-
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <div class="pt-2">Clients</div>

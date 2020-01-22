@@ -25,3 +25,5 @@ Route::resource('/histories', 'HistoryController')->only(['store', 'update', 'de
 Route::resource('/tags', 'TagController')->only(['show']);
 Route::resource('/categories', 'CategoryController');
 Route::get('/users/likes', 'UserController@likes')->name('users.likes');
+
+Route::resource('/search', 'SearchController'); //Ajax함수에서 검색 라우트의 설정을 필요하다. 수정을 해야 함..
