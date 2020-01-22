@@ -6,20 +6,20 @@
             <div class="col-md-8">
                 <form method="GET" action="{{ route('search.index') }}">
                     <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-success" type="submit">Search</button>
-                            </div>
+                        <input type="text" class="form-control" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </div>
                     </div>
                 </form>
 
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <div class="pt-2">Clients</div>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    등록
-                                </button>
+                            <div class="pt-2">태그 '{{ $tag->name }}'의 Clients</div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                등록
+                            </button>
                         </div>
                     </div>
                     {{--클라이언트 리스트 뿌리는 화면--}}
@@ -42,11 +42,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="d-flex justify-content-center mt-4">
-                    {{ $clients->links() }}
-                </div>
-
             </div>
         </div>
     </div>
@@ -59,6 +54,7 @@
 
 @section('scripts')
     <script>
+
         function addClient() {
             if(confirm('Client를 등록하시겠습니까?')) {
                 $.ajax({
@@ -186,5 +182,6 @@
                 })
             }
         }
+
     </script>
 @endsection

@@ -6,52 +6,93 @@
             <div class="col-md-8">
                 <form method="GET" action="{{ route('search.index') }}">
                     <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-success" type="submit">Search</button>
-                            </div>
+                        <input type="text" class="form-control" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search" value="{{ $search }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </div>
                     </div>
                 </form>
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div class="pt-2">Clients</div>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    등록
-                                </button>
-                        </div>
+                        Client 검색결과
                     </div>
-                    {{--클라이언트 리스트 뿌리는 화면--}}
                     <div class="card-body">
-                        <div class="list-group">
 
-                            @foreach($clients as $client)
-                                {{--<a href="{{ route('clients.show', $client->id) }}" class="list-group-item list-group-item-action">--}}
-                                <a href="#" class="list-group-item list-group-item-action" onclick="openEditClientModal({{ $client->id }})">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <div>
-                                            <h5 class="mb-1">{{ $client->id }}. {{ $client->name }}</h5>
-                                            <small>{{ $client->company }}</small>
+                        @if($clients->count())
+                            <div class="list-group">
+                                @foreach($clients as $client)
+                                    <a href="#" class="list-group-item list-group-item-action" onclick="openEditClientModal({{ $client->id }})">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <div>
+                                                <h5 class="mb-1">{{ $client->id }}. {{ $client->name }}</h5>
+                                                <small>{{ $client->company }}</small>
+                                            </div>
+                                            <small>{{ $client->created_at->diffForHumans() }}</small>
                                         </div>
-                                        <small>{{ $client->created_at->diffForHumans() }}</small>
-                                    </div>
-                                </a>
-                            @endforeach
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <h4 class="text-center">검색된 Client가 없습니다.</h4>
+                        @endif
 
-                        </div>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center mt-4">
-                    {{ $clients->links() }}
+                <div class="card mt-4">
+                    <div class="card-header">
+                        Category 검색결과
+                    </div>
+                    <div class="card-body">
+
+                        @if($categories->count())
+                            <div class="list-group">
+                                @foreach($categories as $category)
+                                    <a href="{{ route('search.category', $category->id) }}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <div>
+                                                <h5 class="mb-0">{{ $category->name }}</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <h4 class="text-center">검색된 Category가 없습니다.</h4>
+                        @endif
+
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        Tag 검색결과
+                    </div>
+                    <div class="card-body">
+
+                        @if($tags->count())
+                            <div class="list-group">
+                                @foreach($tags as $tag)
+                                    <a href="{{ route('search.tag', $tag->id) }}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <div>
+                                                <h5 class="mb-0">#{{ $tag->name }}</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <h4 class="text-center">검색된 Tag가 없습니다.</h4>
+                        @endif
+
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
-
-    @include('clients.create-modal')
 
     @include('clients.edit-modal')
 
@@ -59,6 +100,7 @@
 
 @section('scripts')
     <script>
+
         function addClient() {
             if(confirm('Client를 등록하시겠습니까?')) {
                 $.ajax({
@@ -186,5 +228,7 @@
                 })
             }
         }
+
     </script>
 @endsection
+

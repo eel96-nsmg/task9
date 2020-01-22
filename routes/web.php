@@ -18,12 +18,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/clients/{id}/likes', 'ClientController@likes')->name('clients.likes');
 
+Route::post('/clients/{id}/likes', 'ClientController@likes')->name('clients.likes');
 Route::resource('/clients', 'ClientController');
 Route::resource('/histories', 'HistoryController')->only(['store', 'update', 'destroy']);
 Route::resource('/tags', 'TagController')->only(['show']);
 Route::resource('/categories', 'CategoryController');
 Route::get('/users/likes', 'UserController@likes')->name('users.likes');
 
-Route::resource('/search', 'SearchController'); //Ajax함수에서 검색 라우트의 설정을 필요하다. 수정을 해야 함..
+Route::get('/search/category/{id}', 'SearchController@byCategory')->name('search.category');
+Route::get('/search/tag/{id}', 'SearchController@byTag')->name('search.tag');
+Route::get('/search', 'SearchController@index')->name('search.index');

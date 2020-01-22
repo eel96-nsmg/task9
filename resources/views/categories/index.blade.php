@@ -19,7 +19,7 @@
                             @foreach($categories as $category)
                                 <a href="#" class="list-group-item list-group-item-action" onclick="openCategoryEditModal({{ $category->id }})">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">{{ $category->name }}</h5>
+                                        <h5 class="mb-0">{{ $category->name }}</h5>
                                     </div>
                                 </a>
                             @endforeach
