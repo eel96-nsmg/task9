@@ -6,13 +6,28 @@
             <div class="col-md-8">
                 <form method="GET" action="{{ route('search.index') }}">
                     <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search">
+                            {{-- <input type="text" class="form-control" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search"> --}}
+                            <input type="text" class="form-control" id="autoSearch" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search" onkeyup="autoSearches()">
+                            
+
+                                {{----}}
+                                
+                                @foreach($clients as $client)
+                                    <a href="#" class="list-group-item list-group-item-action" id="autoSearch" onkeyup="autoSearches({{ $client->name }})">
+                                        <div>
+                                            <h5 class="mb-1">{{ $client->name }}</h5>
+                                        </div>
+                                    </a>
+                                @endforeach
+
+                                {{----}}
+
                             <div class="input-group-append">
                                 <button class="btn btn-success" type="submit">Search</button>
                             </div>
                     </div>
                 </form>
-
+                
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -186,5 +201,28 @@
                 })
             }
         }
-    </script>
+
+        function autoSearches() {
+            $("#autoSearch").keyup(function() {
+                var Asearch = $('#autoSearch').val();
+                $.ajax({
+                    method: "GET",
+                    url: "/clients",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        keyword : $(this).val(),
+                        name: $('#name').val(),
+                        // categories: $('#categories').val(),
+                        // tags: $('#tags').val(),
+                    },
+                    success: function (res) {
+                        window.location = '{{ route('categories.index') }}'
+                    },
+                })
+            })
+        }
+
+</script>
 @endsection
