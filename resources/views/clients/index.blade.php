@@ -6,28 +6,28 @@
             <div class="col-md-8">
                 <form method="GET" action="{{ route('search.index') }}">
                     <div class="input-group mb-3">
-                            {{-- <input type="text" class="form-control" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search"> --}}
-                            <input type="text" class="form-control" id="autoSearch" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search" onkeyup="autoSearches()">
-                            
-
-                                {{----}}
-                                
-                                @foreach($clients as $client)
-                                    <a href="#" class="list-group-item list-group-item-action" id="autoSearch" onkeyup="autoSearches({{ $client->name }})">
-                                        <div>
-                                            <h5 class="mb-1">{{ $client->name }}</h5>
-                                        </div>
-                                    </a>
-                                @endforeach
-
-                                {{----}}
-
-                            <div class="input-group-append">
-                                <button class="btn btn-success" type="submit">Search</button>
-                            </div>
+                        <input type="text" class="form-control" id="search" name="search" placeholder="검색어를 입력해 주세요." aria-label="Search" onkeyup="autoSearches()" autocomplete="off">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </div>
                     </div>
                 </form>
-                
+
+                <div id="searchedClientsWrap" class="d-none">
+                    <h5>Clients</h5>
+                    <p id="searchedClients"></p>
+                </div>
+
+                <div id="searchedCategoriesWrap" class="d-none">
+                    <h5>Categories</h5>
+                    <p id="searchedCategories"></p>
+                </div>
+
+                <div id="searchedTagsWrap" class="d-none">
+                    <h5>Tags</h5>
+                    <p id="searchedTags"></p>
+                </div>
+
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -203,25 +203,52 @@
         }
 
         function autoSearches() {
-            $("#autoSearch").keyup(function() {
-                var Asearch = $('#autoSearch').val();
+            var search = $('#search').val()
+
+            if (search !== '') {
                 $.ajax({
                     method: "GET",
-                    url: "/clients",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
+                    url: "/search",
                     data: {
-                        keyword : $(this).val(),
-                        name: $('#name').val(),
-                        // categories: $('#categories').val(),
-                        // tags: $('#tags').val(),
+                        search: search,
                     },
                     success: function (res) {
-                        window.location = '{{ route('categories.index') }}'
+                        if (res.clients.length !== 0) {
+                            var clients = res.clients.map(function (client) {
+                                return client.name
+                            })
+                            $('#searchedClients').text(clients.join(', '))
+                            $('#searchedClientsWrap').removeClass('d-none')
+                        } else {
+                            $('#searchedClientsWrap').addClass('d-none')
+                        }
+
+                        if (res.categories.length !== 0) {
+                            var categories = res.categories.map(function (category) {
+                                return category.name
+                            })
+                            $('#searchedCategories').text(categories.join(', '))
+                            $('#searchedCategoriesWrap').removeClass('d-none')
+                        } else {
+                            $('#searchedCategoriesWrap').addClass('d-none')
+                        }
+
+                        if (res.tags.length !== 0) {
+                            var tags = res.tags.map(function (tag) {
+                                return tag.name
+                            })
+                            $('#searchedTags').text(tags.join(', '))
+                            $('#searchedTagsWrap').removeClass('d-none')
+                        } else {
+                            $('#searchedTagsWrap').addClass('d-none')
+                        }
                     },
                 })
-            })
+            } else {
+                $('#searchedClientsWrap').addClass('d-none')
+                $('#searchedCategoriesWrap').addClass('d-none')
+                $('#searchedTagsWrap').addClass('d-none')
+            }
         }
 
 </script>

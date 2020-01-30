@@ -14,7 +14,7 @@ class SearchController extends Controller
     {
         $search = $request->search;
 
-        return view('searches.index', [
+        return response()->json([
             'search' => $search,
             'clients' => Client::where('name', 'like', '%' . $search . '%')->orderByDesc('id')->get(),
             'categories' => Category::where('name', 'like', '%' . $search . '%')->orderByDesc('id')->get(),
