@@ -251,5 +251,13 @@
             }
         }
 
+        function entertag() {
+            var plustag = $('#tags').val();
+            var autoTag = new String(", #")
+
+            tags = plustag + autoTag
+            $('#tags').val(tags)
+        }
+
 </script>
 @endsection

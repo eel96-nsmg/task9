@@ -155,7 +155,7 @@
                         <div class="form-group row">
                             <label for="tags" class="col-sm-4 col-form-label">Tag</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="tags" name="tags" value="#{{ old('tags') }}">
+                                <input type="text" class="form-control" id="tags" name="tags" value="#{{ old('tags') }}" onkeyup="if( event.keyCode == 13) {entertag();}">
 
                                 @error('tags')
                                 <span class="text-danger" role="alert">
